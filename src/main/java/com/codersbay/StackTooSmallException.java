@@ -1,0 +1,8 @@
+package com.codersbay;
+
+public class StackTooSmallException extends Exception {
+
+    public StackTooSmallException(String message) {
+        super(message);
+    }
+}
