@@ -6,25 +6,21 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class MyStackTest {
+class GenericStackTest {
 
     @Test
     @DisplayName("Assert that a stack throws an exception when stack has been emptied and pop is run")
-    public void testForExceptionThrownOnTooManyPops() {
-        MyStack<String> stringStack = new MyStack<>();
+    public void testForExceptionThrownOnTooManyPops() throws StackTooSmallException {
+        GenericStack<String> stringStack = new GenericStack<>();
         stringStack.push("Test #1");
         stringStack.push("Test #2");
         stringStack.push("Test #3");
 
         // Why does try/catch work in this case but adding to the method declaration does not?
-        try {
-            stringStack.pop();
-            stringStack.pop();
-            stringStack.pop();
-            stringStack.pop();
-        } catch (StackTooSmallException exception) {
-            exception.printStackTrace();
-        }
+
+        stringStack.pop();
+        stringStack.pop();
+        stringStack.pop();
 
         assertThrows(StackTooSmallException.class, () -> {
             stringStack.pop();
@@ -34,7 +30,7 @@ class MyStackTest {
     @Test
     @DisplayName("Assert that a newly intialized stack throws an exception when pop is run")
     public void testForExceptionThrownOnEmptyStack() {
-        MyStack<Integer> integerStack = new MyStack<>();
+        GenericStack<Integer> integerStack = new GenericStack<>();
         assertThrows(StackTooSmallException.class, () -> {
             integerStack.pop();
         });
@@ -43,7 +39,7 @@ class MyStackTest {
     @Test
     @DisplayName("Assert that number of sequential pushes equals the length")
     public void testForLengthAfterNumerousPushes() {
-        MyStack<Boolean> booleanStack = new MyStack<>();
+        GenericStack<Boolean> booleanStack = new GenericStack<>();
         booleanStack.push(true);
         booleanStack.push(true);
         booleanStack.push(true);
@@ -53,26 +49,20 @@ class MyStackTest {
 
     @Test
     @DisplayName("Assert that the right bool is uppermost on the stack")
-    public void testForRightBoolOnPeek() {
-        MyStack<Boolean> booleanStack = new MyStack<>();
+    public void testForRightBoolOnPeek() throws StackTooSmallException {
+        GenericStack<Boolean> booleanStack = new GenericStack<>();
         booleanStack.push(false);
         booleanStack.push(true);
         booleanStack.push(true);
         booleanStack.push(false);
         booleanStack.push(false);
         booleanStack.push(true);
+        assertEquals(booleanStack.length(), 6);
+        assertEquals(booleanStack.peek(), true);
+        booleanStack.pop();
+        assertEquals(booleanStack.length(), 5);
+        assertEquals(booleanStack.peek(), false);
 
-        try {
-            booleanStack.pop();
-        } catch (StackTooSmallException exception) {
-            exception.printStackTrace();
-        }
-
-        try {
-            assertEquals(booleanStack.peek(), false);
-        } catch (StackTooSmallException exception) {
-            exception.printStackTrace();
-        }
     }
 
 

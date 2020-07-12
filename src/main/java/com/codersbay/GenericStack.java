@@ -3,7 +3,7 @@ package com.codersbay;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyStack<T> {
+public class GenericStack<T> {
     private final List<T> content = new ArrayList<T>();
 
     public int length() {
